@@ -55,7 +55,7 @@ public class RenameProjectEventHandlerTests {
 
         RenameProjectEventHandler handler = new RenameProjectEventHandler(new NoOpServicesMessageService(), projectService);
         var input = new RenameProjectInput(UUID.randomUUID(), UUID.randomUUID(), "newName"); //$NON-NLS-1$
-        IEditingContext editingContext = () -> UUID.randomUUID();
+        IEditingContext editingContext = () -> UUID.randomUUID().toString();
 
         Many<ChangeDescription> changeDescriptionSink = Sinks.many().unicast().onBackpressureBuffer();
         One<IPayload> payloadSink = Sinks.one();

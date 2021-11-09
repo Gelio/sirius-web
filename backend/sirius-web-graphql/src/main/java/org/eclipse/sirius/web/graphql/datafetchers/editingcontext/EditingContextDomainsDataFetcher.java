@@ -49,6 +49,6 @@ public class EditingContextDomainsDataFetcher implements IDataFetcherWithFieldCo
     @Override
     public List<Domain> get(DataFetchingEnvironment environment) throws Exception {
         UUID editingContextId = environment.getSource();
-        return this.editService.getDomains(editingContextId);
+        return this.editService.getDomains(editingContextId.toString());
     }
 }

@@ -99,7 +99,8 @@ public class RepresentationService implements IRepresentationService, IRepresent
     @Override
     public void save(IEditingContext editingContext, ISemanticRepresentation representation) {
         long start = System.currentTimeMillis();
-        RepresentationDescriptor representationDescriptor = this.getRepresentationDescriptor(editingContext.getId(), representation);
+        UUID editingContextUUID = UUID.fromString(editingContext.getId());
+        RepresentationDescriptor representationDescriptor = this.getRepresentationDescriptor(editingContextUUID, representation);
 
         var optionalProjectEntity = this.projectRepository.findById(representationDescriptor.getProjectId());
         if (optionalProjectEntity.isPresent()) {
@@ -114,7 +115,8 @@ public class RepresentationService implements IRepresentationService, IRepresent
 
     private RepresentationDescriptor getRepresentationDescriptor(UUID editingContextId, ISemanticRepresentation representation) {
         // @formatter:off
-        return RepresentationDescriptor.newRepresentationDescriptor(representation.getId())
+        UUID representationUUID = UUID.fromString(representation.getId());
+        return RepresentationDescriptor.newRepresentationDescriptor(representationUUID)
                 .projectId(editingContextId)
                 .descriptionId(representation.getDescriptionId())
                 .targetObjectId(representation.getTargetObjectId())
@@ -154,7 +156,8 @@ public class RepresentationService implements IRepresentationService, IRepresent
     }
 
     @Override
-    public void deleteDanglingRepresentations(UUID editingContextId) {
-        this.representationRepository.deleteDanglingRepresentations(editingContextId);
+    public void deleteDanglingRepresentations(String editingContextId) {
+        UUID editingContextUUID = UUID.fromString(editingContextId);
+        this.representationRepository.deleteDanglingRepresentations(editingContextUUID);
     }
 }

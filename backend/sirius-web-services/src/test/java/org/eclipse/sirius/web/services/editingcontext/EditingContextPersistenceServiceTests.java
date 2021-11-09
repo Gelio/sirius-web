@@ -90,7 +90,7 @@ public class EditingContextPersistenceServiceTests {
         IEditingContextPersistenceService editingContextPersistenceService = new EditingContextPersistenceService(documentRepository, new NoOpApplicationEventPublisher(), new SimpleMeterRegistry());
         assertThat(entities).hasSize(0);
 
-        IEditingContext editingContext = new EditingContext(UUID.randomUUID(), editingDomain);
+        IEditingContext editingContext = new EditingContext(UUID.randomUUID().toString(), editingDomain);
 
         editingContextPersistenceService.persist(editingContext);
         assertThat(entities).hasSize(1);

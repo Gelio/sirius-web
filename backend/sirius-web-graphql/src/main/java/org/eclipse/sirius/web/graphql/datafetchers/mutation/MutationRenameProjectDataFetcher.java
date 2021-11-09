@@ -75,7 +75,7 @@ public class MutationRenameProjectDataFetcher implements IDataFetcherWithFieldCo
         var input = this.objectMapper.convertValue(argument, RenameProjectInput.class);
 
         // @formatter:off
-        return this.editingContextEventProcessorRegistry.dispatchEvent(input.getProjectId(), input)
+        return this.editingContextEventProcessorRegistry.dispatchEvent(input.getProjectId().toString(), input)
                 .defaultIfEmpty(new ErrorPayload(input.getId(), this.messageService.unexpectedError()))
                 .toFuture();
         // @formatter:on

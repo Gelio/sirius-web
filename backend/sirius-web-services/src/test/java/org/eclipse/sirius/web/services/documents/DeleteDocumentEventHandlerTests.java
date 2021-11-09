@@ -65,7 +65,7 @@ public class DeleteDocumentEventHandlerTests {
 
         Resource resource = new SiriusWebJSONResourceFactoryImpl().createResource(URI.createURI(document.getId().toString()));
         editingDomain.getResourceSet().getResources().add(resource);
-        EditingContext editingContext = new EditingContext(UUID.randomUUID(), editingDomain);
+        EditingContext editingContext = new EditingContext(UUID.randomUUID().toString(), editingDomain);
 
         Many<ChangeDescription> changeDescriptionSink = Sinks.many().unicast().onBackpressureBuffer();
         One<IPayload> payloadSink = Sinks.one();

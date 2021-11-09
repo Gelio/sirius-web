@@ -75,7 +75,7 @@ public class RenameDocumentEventHandlerTests {
         assertThat(editingDomain.getResourceSet().getResources().size()).isEqualTo(1);
         assertThat(adapter.getName()).isEqualTo(OLD_NAME);
 
-        IEditingContext editingContext = new EditingContext(UUID.randomUUID(), editingDomain);
+        IEditingContext editingContext = new EditingContext(UUID.randomUUID().toString(), editingDomain);
 
         Many<ChangeDescription> changeDescriptionSink = Sinks.many().unicast().onBackpressureBuffer();
         One<IPayload> payloadSink = Sinks.one();

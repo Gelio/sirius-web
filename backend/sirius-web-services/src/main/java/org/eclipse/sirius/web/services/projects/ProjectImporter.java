@@ -114,7 +114,7 @@ public class ProjectImporter {
                 .orElseGet(() -> UUID.fromString(descriptionURI));
             // @formatter:on
 
-            CreateRepresentationInput input = new CreateRepresentationInput(inputId, this.projectId, representationDescriptionId, objectId, representationDescriptor.getLabel());
+            CreateRepresentationInput input = new CreateRepresentationInput(inputId, this.projectId.toString(), representationDescriptionId, objectId, representationDescriptor.getLabel());
 
             // @formatter:off
             representationCreated = this.editingContextEventProcessor.handle(input)

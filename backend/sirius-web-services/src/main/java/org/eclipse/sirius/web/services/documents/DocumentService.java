@@ -137,7 +137,7 @@ public class DocumentService implements IDocumentService {
         }
 
         EPackageRegistryImpl ePackageRegistryImpl = new EPackageRegistryImpl();
-        List<EPackage> ePackages = this.editingContextEPackageService.getEPackages(document.getProject().getId());
+        List<EPackage> ePackages = this.editingContextEPackageService.getEPackages(document.getProject().getId().toString());
         ePackages.forEach(ePackage -> ePackageRegistryImpl.put(ePackage.getNsURI(), ePackage));
         ResourceSet resourceSet = new ResourceSetImpl();
         resourceSet.setPackageRegistry(ePackageRegistryImpl);

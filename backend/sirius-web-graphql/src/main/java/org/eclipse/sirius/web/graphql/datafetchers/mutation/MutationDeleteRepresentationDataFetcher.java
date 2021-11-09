@@ -15,6 +15,7 @@ package org.eclipse.sirius.web.graphql.datafetchers.mutation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import org.eclipse.sirius.web.annotations.graphql.GraphQLMutationTypes;
@@ -81,10 +82,12 @@ public class MutationDeleteRepresentationDataFetcher implements IDataFetcherWith
     public CompletableFuture<IPayload> get(DataFetchingEnvironment environment) throws Exception {
         Object argument = environment.getArgument(MutationTypeProvider.INPUT_ARGUMENT);
         var input = this.objectMapper.convertValue(argument, DeleteRepresentationInput.class);
-
+        UUID representationId = UUID.fromString(input.getRepresentationId());
         // @formatter:off
-        return this.representationService.getRepresentation(input.getRepresentationId())
+        this.representationService.getRepresentation(representationId).map(RepresentationDescriptor::getProjectId);
+        return this.representationService.getRepresentation(representationId)
                 .map(RepresentationDescriptor::getProjectId)
+                .map(UUID::toString)
                 .map(projectId -> this.editingContextEventProcessorRegistry.dispatchEvent(projectId, input))
                 .orElse(Mono.empty())
                 .defaultIfEmpty(new ErrorPayload(input.getId(), this.messageService.unexpectedError()))

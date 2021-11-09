@@ -14,7 +14,6 @@ package org.eclipse.sirius.web.services.images;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.eclipse.sirius.web.emf.view.CustomImage;
@@ -37,7 +36,7 @@ public class CustomImageSearchService implements ICustomImageSearchService {
     }
 
     @Override
-    public List<CustomImage> getAvailableImages(UUID editingContextId) {
+    public List<CustomImage> getAvailableImages(String editingContextId) {
         return this.customImageRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
 

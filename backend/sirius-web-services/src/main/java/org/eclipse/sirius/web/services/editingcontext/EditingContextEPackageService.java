@@ -18,7 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -65,7 +64,7 @@ public class EditingContextEPackageService implements IEditingContextEPackageSer
     }
 
     @Override
-    public List<EPackage> getEPackages(UUID editingContextId) {
+    public List<EPackage> getEPackages(String editingContextId) {
         LinkedHashMap<String, EPackage> allEPackages = new LinkedHashMap<>();
         this.findGlobalEPackages().forEach(ePackage -> {
             EPackage previous = allEPackages.put(ePackage.getNsURI(), ePackage);

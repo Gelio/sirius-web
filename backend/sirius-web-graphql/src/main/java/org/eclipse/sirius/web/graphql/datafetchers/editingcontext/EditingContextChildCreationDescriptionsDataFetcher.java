@@ -50,6 +50,6 @@ public class EditingContextChildCreationDescriptionsDataFetcher implements IData
     public List<ChildCreationDescription> get(DataFetchingEnvironment environment) throws Exception {
         UUID editingContextId = environment.getSource();
         String classIdArgument = environment.getArgument(EditingContextTypeProvider.CLASS_ID_ARGUMENT);
-        return this.editService.getChildCreationDescriptions(editingContextId, classIdArgument);
+        return this.editService.getChildCreationDescriptions(editingContextId.toString(), classIdArgument);
     }
 }

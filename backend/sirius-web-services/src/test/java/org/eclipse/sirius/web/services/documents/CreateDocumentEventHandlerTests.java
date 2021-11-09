@@ -100,10 +100,10 @@ public class CreateDocumentEventHandlerTests {
         IServicesMessageService messageService = new NoOpServicesMessageService();
 
         CreateDocumentEventHandler handler = new CreateDocumentEventHandler(documentService, stereotypeDescriptionService, messageService, new SimpleMeterRegistry());
-        var input = new CreateDocumentInput(UUID.randomUUID(), UUID.randomUUID(), DOCUMENT_NAME, STEREOTYPE_DESCRIPTION_ID);
+        var input = new CreateDocumentInput(UUID.randomUUID(), UUID.randomUUID().toString(), DOCUMENT_NAME, STEREOTYPE_DESCRIPTION_ID);
 
         AdapterFactoryEditingDomain editingDomain = new EditingDomainFactory().create();
-        EditingContext editingContext = new EditingContext(UUID.randomUUID(), editingDomain);
+        EditingContext editingContext = new EditingContext(UUID.randomUUID().toString(), editingDomain);
 
         Many<ChangeDescription> changeDescriptionSink = Sinks.many().unicast().onBackpressureBuffer();
         One<IPayload> payloadSink = Sinks.one();
@@ -139,7 +139,7 @@ public class CreateDocumentEventHandlerTests {
         };
         IServicesMessageService messageService = new NoOpServicesMessageService();
         AdapterFactoryEditingDomain editingDomain = new EditingDomainFactory().create();
-        EditingContext editingContext = new EditingContext(UUID.randomUUID(), editingDomain);
+        EditingContext editingContext = new EditingContext(UUID.randomUUID().toString(), editingDomain);
 
         CreateDocumentEventHandler handler = new CreateDocumentEventHandler(documentService, stereotypeDescriptionService, messageService, new SimpleMeterRegistry());
         Many<ChangeDescription> changeDescriptionSink = Sinks.many().unicast().onBackpressureBuffer();

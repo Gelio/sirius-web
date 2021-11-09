@@ -69,7 +69,7 @@ public class EditingContextRepresentationDescriptionsDataFetcher implements IDat
         String classId = environment.getArgument(EditingContextTypeProvider.CLASS_ID_ARGUMENT);
 
         // @formatter:off
-        var representationDescriptions = this.editService.findClass(editingContextId, classId)
+        var representationDescriptions = this.editService.findClass(editingContextId.toString(), classId)
                 .map(this.representationDescriptionService::getRepresentationDescriptions)
                 .orElseGet(ArrayList::new);
         // @formatter:on

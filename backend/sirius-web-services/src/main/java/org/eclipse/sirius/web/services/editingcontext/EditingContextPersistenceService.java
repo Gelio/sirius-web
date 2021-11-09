@@ -76,7 +76,8 @@ public class EditingContextPersistenceService implements IEditingContextPersiste
             EditingDomain editingDomain = ((EditingContext) editingContext).getDomain();
             List<DocumentEntity> documentEntities = this.persist(editingDomain);
             List<Document> documents = documentEntities.stream().map(new DocumentMapper()::toDTO).collect(Collectors.toList());
-            this.applicationEventPublisher.publishEvent(new DocumentsModifiedEvent(editingContext.getId(), documents));
+            UUID editingContextId = UUID.fromString(editingContext.getId());
+            this.applicationEventPublisher.publishEvent(new DocumentsModifiedEvent(editingContextId, documents));
         }
 
         long end = System.currentTimeMillis();

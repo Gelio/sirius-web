@@ -42,9 +42,10 @@ public class RepresentationSearchService implements IRepresentationSearchService
     }
 
     @Override
-    public <T extends IRepresentation> Optional<T> findById(IEditingContext editingContext, UUID representationId, Class<T> representationClass) {
+    public <T extends IRepresentation> Optional<T> findById(IEditingContext editingContext, String representationId, Class<T> representationClass) {
         // @formatter:off
-        return this.representationRepository.findById(representationId)
+        UUID representationUUID = UUID.fromString(representationId);
+        return this.representationRepository.findById(representationUUID)
                 .map(new RepresentationMapper(this.objectMapper)::toDTO)
                 .map(RepresentationDescriptor::getRepresentation)
                 .filter(representationClass::isInstance)

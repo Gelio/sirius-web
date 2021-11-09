@@ -82,17 +82,19 @@ public class EditingContextSearchService implements IEditingContextSearchService
     }
 
     @Override
-    public boolean existsById(UUID editingContextId) {
+    public boolean existsById(String editingContextId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return this.projectRepository.existsByIdAndIsVisibleBy(editingContextId, username);
+        UUID editingContextUUID = UUID.fromString(editingContextId);
+        return this.projectRepository.existsByIdAndIsVisibleBy(editingContextUUID, username);
     }
 
     @Override
-    public Optional<IEditingContext> findById(UUID editingContextId) {
+    public Optional<IEditingContext> findById(String editingContextId) {
         long start = System.currentTimeMillis();
 
         this.logger.debug("Loading the editing context {}", editingContextId); //$NON-NLS-1$
 
+        UUID editingContextUUID = UUID.fromString(editingContextId);
         AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(this.composedAdapterFactory, new BasicCommandStack());
 
         ResourceSet resourceSet = editingDomain.getResourceSet();
@@ -104,7 +106,7 @@ public class EditingContextSearchService implements IEditingContextSearchService
         additionalEPackages.forEach(ePackage -> ePackageRegistry.put(ePackage.getNsURI(), ePackage));
         resourceSet.setPackageRegistry(ePackageRegistry);
 
-        List<DocumentEntity> documentEntities = this.documentRepository.findAllByProjectId(editingContextId);
+        List<DocumentEntity> documentEntities = this.documentRepository.findAllByProjectId(editingContextUUID);
         for (DocumentEntity documentEntity : documentEntities) {
             URI uri = URI.createURI(documentEntity.getId().toString());
             JsonResource resource = new SiriusWebJSONResourceFactoryImpl().createResource(uri);

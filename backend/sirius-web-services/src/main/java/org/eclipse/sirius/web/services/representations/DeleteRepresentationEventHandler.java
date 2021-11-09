@@ -13,6 +13,7 @@
 package org.eclipse.sirius.web.services.representations;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import org.eclipse.sirius.web.core.api.ErrorPayload;
 import org.eclipse.sirius.web.core.api.IEditingContext;
@@ -74,8 +75,9 @@ public class DeleteRepresentationEventHandler implements IEditingContextEventHan
         if (input instanceof DeleteRepresentationInput) {
             DeleteRepresentationInput deleteRepresentationInput = (DeleteRepresentationInput) input;
 
-            if (this.representationService.existsById(deleteRepresentationInput.getRepresentationId())) {
-                this.representationService.delete(deleteRepresentationInput.getRepresentationId());
+            UUID representationId = UUID.fromString(deleteRepresentationInput.getRepresentationId());
+            if (this.representationService.existsById(representationId)) {
+                this.representationService.delete(representationId);
 
                 payload = new DeleteRepresentationSuccessPayload(input.getId(), deleteRepresentationInput.getRepresentationId());
                 changeDescription = new ChangeDescription(ChangeKind.REPRESENTATION_DELETION, editingContext.getId(), input);

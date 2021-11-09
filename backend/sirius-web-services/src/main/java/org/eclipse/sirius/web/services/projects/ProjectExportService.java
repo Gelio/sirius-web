@@ -277,7 +277,7 @@ public class ProjectExportService implements IProjectExportService {
     private ResourceSet loadAllDocuments(UUID projectId) {
         List<Document> documents = this.documentService.getDocuments(projectId);
         EPackageRegistryImpl ePackageRegistry = new EPackageRegistryImpl();
-        this.editingContextEPackageService.getEPackages(projectId).forEach(ePackage -> ePackageRegistry.put(ePackage.getNsURI(), ePackage));
+        this.editingContextEPackageService.getEPackages(projectId.toString()).forEach(ePackage -> ePackageRegistry.put(ePackage.getNsURI(), ePackage));
         ResourceSet resourceSet = new ResourceSetImpl();
         for (Document document : documents) {
             ResourceSet loadingResourceSet = new ResourceSetImpl();
@@ -322,7 +322,7 @@ public class ProjectExportService implements IProjectExportService {
     private void addManifest(UUID projectId, String projectName, Map<String, String> id2DocumentName, Map<String, RepresentationManifest> representationsManifests, ZipOutputStream zippedout)
             throws IOException {
         // @formatter:off
-        List<String> metamodels = this.editingContextEPackageService.getEPackages(projectId).stream()
+        List<String> metamodels = this.editingContextEPackageService.getEPackages(projectId.toString()).stream()
                 .map(EPackage::getNsURI)
                 .collect(Collectors.toList());
 

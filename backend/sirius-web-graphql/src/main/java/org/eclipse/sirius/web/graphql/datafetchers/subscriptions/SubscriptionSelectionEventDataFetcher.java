@@ -74,7 +74,7 @@ public class SubscriptionSelectionEventDataFetcher implements IDataFetcherWithFi
     public Publisher<IPayload> get(DataFetchingEnvironment environment) throws Exception {
         Object argument = environment.getArgument(SubscriptionTypeProvider.INPUT_ARGUMENT);
         var input = this.objectMapper.convertValue(argument, SelectionEventInput.class);
-        var selectionConfiguration = new SelectionConfiguration(UUID.randomUUID(), input.getSelectionId(), input.getTargetObjectId());
+        var selectionConfiguration = new SelectionConfiguration(UUID.randomUUID().toString(), input.getSelectionId(), input.getTargetObjectId());
 
         // @formatter:off
         return this.editingContextEventProcessorRegistry.getOrCreateEditingContextEventProcessor(input.getEditingContextId())

@@ -15,6 +15,7 @@ package org.eclipse.sirius.web.graphql.datafetchers.mutation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import org.eclipse.sirius.web.annotations.graphql.GraphQLMutationTypes;
@@ -86,6 +87,7 @@ public class MutationRenameDocumentDataFetcher implements IDataFetcherWithFieldC
         return this.documentService.getDocument(input.getDocumentId())
                 .map(Document::getProject)
                 .map(Project::getId)
+                .map(UUID::toString)
                 .map(projectId -> this.editingContextEventProcessorRegistry.dispatchEvent(projectId, input))
                 .orElse(Mono.empty())
                 .defaultIfEmpty(new ErrorPayload(input.getId(), this.messageService.unexpectedError()))

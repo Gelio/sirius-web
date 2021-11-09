@@ -52,6 +52,6 @@ public class EditingContextRootObjectCreationDescriptionsDataFetcher implements 
         String domainId = environment.getArgument(EditingContextTypeProvider.DOMAIN_ID_ARGUMENT);
         Boolean suggested = environment.getArgument(EditingContextTypeProvider.SUGGESTED_ARGUMENT);
 
-        return this.editService.getRootCreationDescriptions(editingContextId, domainId, suggested);
+        return this.editService.getRootCreationDescriptions(editingContextId.toString(), domainId, suggested);
     }
 }
