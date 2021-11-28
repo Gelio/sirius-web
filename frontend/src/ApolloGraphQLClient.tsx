@@ -15,8 +15,15 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { httpOrigin, wsOrigin } from '@eclipse-sirius/sirius-components';
 
+/** @see https://github.com/eclipse-sirius/sirius-web/blob/0866885f5ed3c3f4ee758c756d4c25c2d7f8fb94/backend/sirius-web-sample-application/src/main/java/org/eclipse/sirius/web/sample/filters/SiriusWebAuthenticationFilter.java#L46 */
+const rawCredentials = 'system:012345678910';
+const authHeaders = {
+  Authorization: `Basic ${btoa(rawCredentials)}`,
+};
+
 const httpLink = new HttpLink({
   uri: `${httpOrigin}/api/graphql`,
+  headers: authHeaders,
 });
 
 const wsLink = new WebSocketLink({

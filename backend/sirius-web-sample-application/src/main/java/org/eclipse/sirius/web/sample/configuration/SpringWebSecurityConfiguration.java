@@ -44,7 +44,7 @@ public class SpringWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable();
+        http.cors();
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/api/graphql").authenticated(); //$NON-NLS-1$
         http.authorizeRequests().antMatchers("/**").permitAll(); //$NON-NLS-1$
